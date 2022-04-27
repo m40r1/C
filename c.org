@@ -1,0 +1,486 @@
+
+********                       *C programming*
+
+
+
+
+* Data
+** Data structures
+*** Structs
+a data type that can store variables of all data types
+syntax:
+#+begin_src c
+  struct var {
+      int num;
+      char let[];
+      char *let;
+  }var;
+#+end_src*** Unions
+A struct that can only hold one value at a time
+syntax:
+#+begin_src c
+  union var {
+      int num;
+      char let[];
+      char *let;
+  }var;
+#+end_src
+*** Typedef
+defines new types for variables
+#+begin_src c
+  struct var {
+      int num;
+      char let[];
+      char *let;
+  }var;
+typedef struct var texto;
+texto input = {num,let[],*let};
+#+end_src
+*** Enum
+enum holds tags ,{a,b,c} = tags,they are treated as ints
+syntax:
+#+begin_src c
+  enum week {seg,ter,qua,qui,sex,sab,dom};
+#+end_src
+*** Casting
+convert the type of variables
+syntax:
+#+begin_src c
+  (int) var;
+#+end_src
+*** Packed_Structs
+Packed structures are good to save space but should not be used because they are slow to get the data
+They can be used in place of bitwise operations
+syntax:
+#+begin_src c
+      struct status{
+          char character;
+          int error:1;
+          int frame_err:1;
+          int parity_err:1:
+          int carrier_err:1;
+          int channel_err:1;
+    };
+#+end_src
+Now every item can be used as a flag.
+*** Array
+An array ocupies memory inline so[0] will be 0x10 and [1] 0x11
+It can be used to store strings but you can have an array of any variable
+ #+begin_src c
+   int var[50];
+   char [30];
+#+end_src
+There is also arrays and pointers,in c they are in a weird way the same thing
+The two are 2 bits,used to store characters,and you use pointers to acess arrays all the time
+So its like this
+#+begin_src c
+  char *ptr;/*the initial point of the list*/
+  char list[4] = "you";
+
+  ptr=&list[];/*& gets the list*/
+  ptr=list;/*also work but is less nerdy*/
+#+end_src
+Now pointer points to the start of the list
+So you could dereference it to get the first letter of the string
+You couldadd to the address of pointer to move by the string
+An array is stored one next to the other in memory after all
+So with this
+#+begin_src c
+    for(int x=0;x<strlen(list);++x){/*making sure it gets all the str*/
+        char a[50]=*ptr;/*copying an array*/
+        ++ptr;/*passing by the str*/
+  /*maybe you should add a EOF*/
+            }
+#+end_src
+You can effectively acess array with pointer and move trough then
+But the best part is spliting strings with pointers
+#+begin_src c
+    char *ptr2;/*will be put at division*/
+
+    for(int x=0;x<strlen(list);++x){
+        if(*ptr=='o'){
+            ptr2=&list[x];
+            ++ptr;
+        }
+        else 
+            ++ptr;
+  /* im dividing you*/
+ #+end_src
+
+** Datatypes
+*** Pointer
+A pointer is a variable that holds memory address from other variables
+So in a way it points to variables
+They are very small so its good to use them when working with a lot of data
+they are also used to interact more easily with structs and arrays
+There is this thing:  *&*  and it can be used to return the address of a variable
+So making a pointer store a address and then access the data is just:
+#+begin_src c
+    struct correio{
+        char nome[60];
+        char rua[60];
+        char bairro[30];
+        char cidade[60];
+        long int number;
+  };
+struct correio *list_ptr[];
+list_ptr[]=&list[];
+printf("%c",*list_ptr);
+#+end_src
+The  ***  is a dereference operator and its used to access the data at the address of the pointer 
+The fastest way to deal with array and matrixes are pointersj
+*** Integer
+A integer is a variable that holds a number
+It can be positive or negative
+A int is normaly 4 bytes
+#+begin_src c
+  int var;
+#+end_src
+*** Long int
+The same as int but has 8 bytes
+#+begin_src c
+  long int var;
+#+end_src
+*** Floating point 
+A floating point is a variable that holds decimal numbers,normally float is used for precision of up to the 6 number to the right
+#+begin_src c
+  float var;
+#+end_src
+*** Double
+A float with precision to th 12 number to the right
+#+begin_src c
+  double var;
+#+end_
+*** Char
+Character are just 2 bytes and are used to store character,an array of chars form strings
+Its small and extremely useful for handling strings
+It cand be unsigned for extended ascii support
+#+begin_src c
+  char var;
+#+end_src
+
+** Declarations
+*** Const
+Is a keyword used for making variables unchangable
+syntax and tricks withs pointer:
+#+begin_src c
+  const char letra='a';
+  const char *ptr="P";/*makes just the value constant*/
+  char *const ptr="P";/*is a constant pointer but the value can be changed*/
+  const char *const ptr="P";/*everything is constant*/ 
+#+end_src
+*const makes the pointer constant
+just const makes the data constant
+*** Unsigned 
+It makes the last bit a 0 so that it can be used
+It makes the variable just positive numbers
+It can  store more data
+#+begin_src c
+  unsigned double var;
+#+end_src
+*** Register
+The number of register per pc may vary
+But 11 for linux
+2 to be safe
+128 is a super pc
+When you put a register in the declaration the var is stored in register wich is faster than main mem
+#+begin_src c
+  register int x;/*i am speed*/
+#+end_src
+Don`t use up all the register with your shitty progs
+j
+* Logic
+** Switch-case
+Its a better way to catch logic then a lot of if|else logic gates
+switch is a  variable and you set values of the variable to do diferent things
+use break to terminate each logic
+syntax:
+#+begin_src c
+    switch (a){
+    case 'S': ...
+        break;
+    case 'a':...
+        continue;
+    default:
+        break;
+  }
+#+end_src
+** For
+A for loop is used to repeat action until a condition is met
+syntax:
+#+begin_src c
+    for(initialaze;condition;do_thing){
+        things to do as the loop iterates
+  }
+#+end_src
+Nested loops should be organized with the innermost loop as the bigger 
+Put the tiny loops first so that they get done faster and free mem 
+#+begin_src c
+  for(x=0;x<1;++x)
+    for(y=0;y<10;++y)
+        for(c=0;c<30;++c)
+#+end_src
+
+** If Else
+You can use if to catch a lot of things
+Its a way to control the flow of the program by creating conditions that if set can do some code
+Basically make the program flexible logically
+There is also  if-else for extra logic options
+And else for the rest
+#+begin_src c
+  if(condition){
+do code
+}
+if else(another condition){
+do code
+}
+else {just do it}
+#+end_src
+** While
+Its a loop just like for,i dont use it
+but here is the ideia
+#+begin_src c
+  while(condition){
+do things
+} the stop;
+#+end_src
+** Statements
+*** break 
+Its used for breaking out of loops
+And to stop switch-cases
+*** continue
+Its used for going to the start of the code block
+Go to the start of the loop
+*** #define
+Define can be used to make a const || macro
+Its not used a lot but can be useful to do some code in a easier way
+Problably could be done with const and would have a better syntax
+Because define is part of the C preprocessor it has a diferent syntax
+syntax:
+#+begin_src c
+#define MENOS(x)(y) x-y;
+#+end_src
+** Functions
+They are blocks of code that can have paramaters given and are use to do things
+open() is a function
+But you can also declare your own functions 
+syntax:
+#+begin_src c
+  int function(int a,char b){
+  do things
+  };
+  int main(){
+      function(1,'a');
+  }
+#+end_src
+** Recursion
+Recursion is a way to do an "inverse"  loop
+The ideia is that you start at a point and then you will call the function from the function until a designed break
+A break point is one of the most important things for recursion
+Code sample:
+#+begin_src c
+  int recursion(int num){
+      if(num>0)return(num-1);
+      else return;
+  }
+#+end_src
+
+* File I/O
+** Conversion routines
+Scan routine for strings in file would be the use of sscanf||fscanf
+for example:
+#+begin_src c
+number = sscanf(file,format,&read);
+#+end_src
+** Binary & ascii
+Today we will look at  2 filetypes
+- Binary
+  Its smaller,not so readable,not so portable,faster
+  Binary are really useful because it compacts the data and make it easier to wokr with
+  When using a lot of data you think more of binary files but is a lot harder to make it portable to other systems
+
+- Ascii
+  Its text,not so much to it,its slower because it converst everything to ascii
+  txt is an ascii file
+  Its easier to use,extrememly portable,almost everymachine can read ascii files 
+  Use this most of the time i think
+** I/O 
+*** Buffered I/O
+Does not write to the file directly,it will create a buffer,a place i memoty to hold the data
+until it gets to a good si,and then the data gets writen to the file
+This is used because it is easier on the system resources
+Opening files with buffered I/O can be done with:
+***** fopen()
+uses a file var and modes to open a file
+#+begin_src c
+  FILE file1;
+  file1 = fopen(file-name,"w");
+  if(file1==NULL){
+      /*catching errs and shit*/
+  }
+#+end_src
+***** fclose()
+just the name of the FILE var
+#+begin_src c
+  fclose(file1)
+#+end_src 
+*** Unbuffered I/O
+When using unbuffered i/o you must take in consideration the amount of data
+You dont want to have a 1gb byffer because the buffer is stored in memory
+Thats why when working with large quantity of binary data or you want direct control of a device or file
+You use the unbuffered i/o method of opening files:
+***** open()
+file descriptor,flags and permissions
+#+begin_src c
+  int file_fd;
+  file_fd=open(argv[1],O_RDONLY,);
+#+end_src
+The open function gives you way more control of the way youre going to handle the files
+#+begin_src c
+  int file_fd;
+  file_fd=open(argv[1],O_WONLY|O_TRUNC|O_CREAT,O644);
+#+end_src
+This is the way you would have a write only file opened with open
+The second paramater are flags,there are some of then,setup an IDE and you wont have to decorate all of them
+The number are the file permisions if it needs to be created
+***** close() 
+close is really simple
+#+begin_src c
+close(file_descriptor)
+#+end_src
+You just give the file_descriptor to close
+***** read()
+#+begin_src c
+  read_size = read(file_descriptor,buffer,size);
+ #+end_src
+read_size is the size of the read or err
+file_descriptor is the file var
+buffer is where to store the data
+size is the sizeof file_descriptor
+***** write()
+#+begin_src c
+  write_size = write(file_descriptor,buffer,size);
+ #+end_src
+write_size is the size of write or err
+file_descriptor is the file var
+buffer is where to store the data
+size is the sizeof file_descriptor
+
+*** Binary I/O
+Binary i/o uses two routines
+***** fread
+#+begin_src c
+  read_size = fread(data_ptr,1,size,file);
+ #+end_src
+data_ptr is a pointer to the data
+there is always a one there,look at the manual
+sizeof file
+file to read
+ 
+***** fwrite
+#+begin_src c
+write_size = fwrite(data_ptr,1,size,file);
+#+end_src
+data_ptr is a pointer to the data
+there is always a 1 there,look at the manual
+sizeof buffer
+file to writ
+
+*** Ascii I/O
+Uses fgets to get from a file
+&&
+fprintf to print to a file
+
+* Bits
+** *&* operator
+ The & operator is the bolean AND 
+ So when the two bit are 0 or 1 its 1
+ else is 0
+ 
+ 0101
+ &
+ 1111
+ -------
+ 0101
+** *|* operator
+The | operator is the bolean OR
+So when one of the two bits are 1 its 1
+else is 0
+
+0101
+|
+1111
+-------
+** *^* operator
+The ^ operator is the bolean XOR
+So when the two are 1 its 0
+When the two are 0 its 0
+Else its 1
+
+0101
+^
+1111
+-------
+1010
+** *~* operator
+The ~ operator is the boolean NOT
+So when 0 its 1
+When 1 its 0
+It flips the bits
+
+~0101
+---------
+1010
+** *<< | >>* operators
+The left and right shift opeartors are capable of moving the bit order
+So you have 10000000 with   *>>*   it will become 01000000 and the left shift does the inverse
+It will always put a zero in the last bit
+Just think of it as a way to make a bit tranverse the positions it can be in
+Its a multiplication by 2 | division by 2 operation
+Its faster than using * but its better to not use it if not extremely necesary
+** Setting bits
+The best way to set flags is with bit manipulation
+#+begin_src c
+  char flags 0; /*could it be static*/
+  const int direc_conec = (1<<7);/*a flag to be set*/
+  const int go_fast = (1<<6);/*anoda one*/
+  flags |= go_fast; /*i am speed*/
+  flags |= direc_conec; /*we are connected*/
+#+end_src
+You can use a char to store the flags and declare const ints that will set the bits in char flags
+The const ints will be  (what to put<<moving the thing where) or (1<<7)
+Use if catches to set the flags 
+#+begin_src c
+  if(2>1)
+      flags |= go_fast;
+/*looks like a dangerous ideia*/
+#+end_src
+And now you can have a way to catche err and whatver more you imagine
+
+* Useful code
+** Make
+ #+begin_src make
+cc=gcc
+cflags=-g -o 
+a=nome.c
+b=nome
+
+$(b): $(a)
+$(cc) $(cflags) $(b) $(a)
+clean:
+rm -f $(b)
+ #+end_src
+* Extra
+** 2*2
+Store your data in multiples of 2
+It makes it easier to make math for the pc
+Its not really that important
+But the preprocesor transforms division and multiplication by 2 in bit shifts
+Thats why you dont need to use it
+And thats why you make mem a multiple of 2
+//*dont know about this last one*//
+** Macro X Funcs
+When thinking of optimization in c there is the ideia of macro versus functions
+Its normally easier to use functions but they are slower
+Macros are faster but they make the code clunky and occupy more storage
+

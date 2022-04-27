@@ -1,5 +1,4 @@
 git init
 git add .
-git commit -m 'Initial Commit'
+git commit -m 'network things'
 git push -u origin master
-
